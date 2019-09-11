@@ -11,13 +11,10 @@
   "plugins": {
     "reg-keygen-git-hash-plugin": true,
     "reg-notify-github-plugin": {
-      "clientId": "MzIwNzIxMzQ00jd00XXOzy3Iz0vNKynWNzQ2MTc1NtU3TNFNSS0DAA=="
-    },
-    "reg-notify-slack-plugin": {
-      "webhookUrl": "https://hooks.slack.com/services/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"
+      "clientId": "cliendId"
     },
     "reg-publish-s3-plugin": {
-      "bucketName": "reg.oned.app"
+      "bucketName": "TBD"
     }
   }
 }
