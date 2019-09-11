@@ -1,5 +1,7 @@
 # Mobile Components
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Naturalclar/mobile-components.svg)](https://greenkeeper.io/)
+
 ## 開発手順
 
 新しく Component を作成する為には、まずこのレポジトリを Clone します
