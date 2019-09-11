@@ -1,22 +1,12 @@
-# 1D-Components
-
-1D アプリで使用する共通の Component ライブラリ
-
-## install
-
-private repository を install するための npm token を 1D メンバーから受け取ってある必要があります。
-
-```sh
-yarn add @1d/components
-```
+# Mobile Components
 
 ## 開発手順
 
 新しく Component を作成する為には、まずこのレポジトリを Clone します
 
 ```sh
-git clone https://github.com/1d-dev/1D-Components.git
-cd 1D-Components
+git clone https://github.com/Naturalclar/mobile-components.git
+cd mobile-components
 ```
 
 そして、dependencies を install します
