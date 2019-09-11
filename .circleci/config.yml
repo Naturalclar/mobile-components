@@ -1,0 +1,100 @@
+version: 2.1
+
+commands:
+  restore_module_cache:
+    parameters:
+      module_path:
+        type: string
+    steps:
+      - restore_cache:
+          keys:
+            - v{{ .Environment.CIRCLECI_CACHE_VERSION }}-dependencies-<< parameters.module_path >>-{{ checksum "<< parameters.module_path >>/yarn.lock" }}
+  save_module_cache:
+    parameters:
+      module_path:
+        type: string
+    steps:
+      - save_cache:
+          key: v{{ .Environment.CIRCLECI_CACHE_VERSION }}-dependencies-<< parameters.module_path >>-{{ checksum "<< parameters.module_path >>/yarn.lock" }}
+          paths:
+            - << parameters.module_path >>/node_modules
+  lint:
+    steps:
+      - run:
+          name: "Lint Files"
+          command: yarn lint
+  install:
+    steps:
+      - run:
+          name: "Install dependencies"
+          command: yarn
+  type-check:
+    steps:
+      - run:
+          name: "Verify types"
+          command: yarn type-check
+  setup-npm:
+    steps:
+      - run:
+          name: Set npm token
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+  install_fonts:
+    steps:
+      - run:
+          name: Prepare Japanese fonts
+          command: |
+            mkdir /tmp/fonts
+            cd /tmp/fonts
+            wget https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKjp-hinted.zip
+            unzip NotoSansCJKjp-hinted.zip
+            mkdir -p ~/.fonts
+            cp *otf ~/.fonts
+            fc-cache -f -v
+            fc-match --all
+  build_storybook:
+    steps:
+      - run:
+          name: "Build Storybook"
+          command: yarn storybook:build
+  visreg_test:
+    steps:
+      - run:
+          name: "Run Visual-Regression test"
+          command: |
+            yarn zisui:all
+            yarn reg-suit
+  klank:
+    steps:
+      - run:
+          name: "Notify Storybook in PR"
+          command: yarn klank
+
+  setup_and_test:
+    steps:
+      - install_fonts
+      - checkout
+      - restore_module_cache: { module_path: ./ }
+      - setup-npm
+      - install
+      - lint
+      - type-check
+      - save_module_cache: { module_path: ./ }
+      - visreg_test
+      - build_storybook
+      - store_artifacts:
+          path: storybook-static
+      - klank
+
+jobs:
+  test:
+    docker:
+      - image: circleci/node:dubnium-browsers
+    working_directory: ~/app
+    steps:
+      - setup_and_test
+
+workflows:
+  version: 2.1
+  test_and_build:
+    jobs:
+      - test
