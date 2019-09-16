@@ -17,14 +17,9 @@ module.exports = {
     "react-native/react-native": true
   },
   rules: {
-    "react/jsx-filename-extension": [2, { extensions: [".tsx", ".ts"] }],
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        devDependencies: ["**/*.test.tsx", "**/*.story.tsx"]
-      }
-    ],
-    "import/no-unresolved": [2, { ignore: ["./assets"] }],
+    "react/jsx-filename-extension": ["error", { extensions: [".tsx", ".ts"] }],
+    "import/no-extraneous-dependencies": "off",
+    "import/no-unresolved": ["error", { ignore: ["./assets"] }],
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/prefer-interface": "off",
@@ -34,7 +29,7 @@ module.exports = {
       { properties: "never", ignoreDestructuring: true }
     ],
     "@typescript-eslint/explicit-function-return-type": "off",
-    "react-native/no-unused-styles": 2
+    "react-native/no-unused-styles": "error"
   },
   settings: {
     "import/resolver": {
