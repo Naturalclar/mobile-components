@@ -1,5 +1,4 @@
 import * as React from "react";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { RenderFunction } from "@storybook/react";
 import { StyleSheet, View, Text } from "react-native";
 
